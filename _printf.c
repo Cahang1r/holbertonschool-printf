@@ -20,9 +20,16 @@ int _printf(const char *format, ...)
 
     while (format[i])
     {
-        if (format[i] == '%' && format[i + 1])
+        if (format[i] == '%')
         {
             i++;
+
+            if (!format[i])
+            {
+                va_end(args);
+                return (-1);
+            }
+
             if (format[i] == 'c')
             {
                 char c = (char)va_arg(args, int);
@@ -36,8 +43,7 @@ int _printf(const char *format, ...)
                     str = "(null)";
                 while (*str)
                 {
-                    write(1, str, 1);
-                    str++;
+                    write(1, str++, 1);
                     count++;
                 }
             }
@@ -48,7 +54,6 @@ int _printf(const char *format, ...)
             }
             else
             {
-                /* Unknown specifier, print as-is */
                 write(1, "%", 1);
                 write(1, &format[i], 1);
                 count += 2;
@@ -63,5 +68,5 @@ int _printf(const char *format, ...)
     }
 
     va_end(args);
-    return count;
+    return (count);
 }
