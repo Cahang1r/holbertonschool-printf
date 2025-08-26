@@ -5,5 +5,10 @@
 #include <unistd.h>
 
 int _printf(const char *format, ...);
+int print_char(va_list args);
+int print_string(va_list args);
+int print_percent(void);
+int handle_format(const char *format, va_list args, int *i);
+int parse_format(const char *format, va_list args);
 
 #endif /* MAIN_H */
