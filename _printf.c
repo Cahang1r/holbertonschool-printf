@@ -4,6 +4,7 @@
  * parse_format - processes the format string
  * @format: format string
  * @args: argument list
+ *
  * Return: number of characters printed
  */
 int parse_format(const char *format, va_list args)
@@ -32,6 +33,7 @@ int parse_format(const char *format, va_list args)
 /**
  * _printf - produces output according to a format
  * @format: format string
+ *
  * Return: number of characters printed
  */
 int _printf(const char *format, ...)
