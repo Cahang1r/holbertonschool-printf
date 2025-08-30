@@ -11,4 +11,7 @@ int print_percent(void);
 int handle_format(const char *format, va_list args, int *i);
 int parse_format(const char *format, va_list args);
 
+
+int print_integer(int n);
+
 #endif /* MAIN_H */
