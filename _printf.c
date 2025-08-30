@@ -1,5 +1,4 @@
-#include <stdarg.h>
-#include <unistd.h>
+#include "main.h"
 
 /**
  * _putchar - writes a character to stdout
@@ -94,7 +93,6 @@ int _printf(const char *format, ...)
                     printed += print_int(va_arg(args, int));
                     break;
                 default:
-                    /* If unknown specifier, print '%' and the char */
                     printed += _putchar('%');
                     printed += _putchar(format[i]);
                     break;
