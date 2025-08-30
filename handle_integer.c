@@ -1,20 +1,52 @@
+#include <unistd.h>
 #include "main.h"
 
 /**
- * print_integer - Prints an integer
- * @n: Integer to print
- * Return: Number of characters printed
+ * print_char - prints a single character
+ * @c: character to print
+ *
+ * Return: 1 (number of characters printed)
  */
-int print_integer(int n)
+int print_char(char c)
 {
-    char buf[12]; /* Buffer to hold digits */
-    int i = 0, count = 0;
+    return write(1, &c, 1);
+}
+
+/**
+ * print_string - prints a string
+ * @s: string to print
+ *
+ * Return: number of characters printed
+ */
+int print_string(char *s)
+{
+    int i = 0;
+
+    if (!s)
+        s = "(null)";
+    while (s[i])
+    {
+        write(1, &s[i], 1);
+        i++;
+    }
+    return i;
+}
+
+/**
+ * print_int - prints an integer
+ * @n: integer to print
+ *
+ * Return: number of characters printed
+ */
+int print_int(int n)
+{
     unsigned int num;
+    int count = 0;
+    char c;
 
     if (n < 0)
     {
-        write(1, "-", 1);
-        count++;
+        count += write(1, "-", 1);
         num = -n;
     }
     else
@@ -22,16 +54,11 @@ int print_integer(int n)
         num = n;
     }
 
-    do {
-        buf[i++] = (num % 10) + '0';
-        num /= 10;
-    } while (num > 0);
+    if (num / 10)
+        count += print_int(num / 10);
 
-    while (i--)
-    {
-        write(1, &buf[i], 1);
-        count++;
-    }
+    c = (num % 10) + '0';
+    count += write(1, &c, 1);
 
     return count;
 }
