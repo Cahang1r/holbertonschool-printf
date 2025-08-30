@@ -1,53 +1,29 @@
 #include <stdarg.h>
 #include <unistd.h>
 
-/* Function to print a single character */
-int _putchar(char c)
-{
-    return write(1, &c, 1);
-}
+/* Forward declaration */
+int parse_format(const char *format, va_list args);
 
-/* Recursive function to print an integer */
-int print_number(int n)
-{
-    int count = 0;
-
-    if (n < 0)
-    {
-        count += _putchar('-');
-        if (n == -2147483648) /* Handle INT_MIN edge case */
-        {
-            count += write(1, "2147483648", 10);
-            return count;
-        }
-        n = -n;
-    }
-
-    if (n / 10)
-        count += print_number(n / 10);
-
-    count += _putchar((n % 10) + '0');
-
-    return count;
-}
-
-/* Handler for %d and %i */
-int handle_di(va_list args)
-{
-    int num = va_arg(args, int);
-    return print_number(num);
-}
-
-/* Minimal printf that only supports %d and %i */
+/* Your _printf function */
 int _printf(const char *format, ...)
 {
     va_list args;
-    int i = 0, count = 0;
+    int count;
 
     if (!format)
         return -1;
 
     va_start(args, format);
+    count = parse_format(format, args);
+    va_end(args);
+
+    return count;
+}
+
+/* Your parse_format function */
+int parse_format(const char *format, va_list args)
+{
+    int i = 0, count = 0;
 
     while (format[i])
     {
@@ -55,42 +31,31 @@ int _printf(const char *format, ...)
         {
             i++;
             if (format[i] == 'd' || format[i] == 'i')
-                count += handle_di(args);
-            else if (format[i] == '%') /* To print a literal '%' */
-                count += _putchar('%');
+            {
+                int num = va_arg(args, int);
+                /* Implement printing integer logic here or call a helper */
+                /* For example, a print_number function */
+                /* count += print_number(num); */
+            }
+            else if (format[i] == '%')
+            {
+                count += write(1, "%", 1);
+            }
             else
             {
-                /* If unknown specifier, just print it literally */
-                count += _putchar('%');
+                count += write(1, "%", 1);
                 if (format[i])
-                    count += _putchar(format[i]);
+                    count += write(1, &format[i], 1);
                 else
-                    i--; /* If end of string, rewind */
+                    i--;
             }
             i++;
         }
         else
         {
-            count += _putchar(format[i]);
+            count += write(1, &format[i], 1);
             i++;
         }
     }
-
-    va_end(args);
     return count;
 }
-
-/* Test main */
-#ifdef TEST_PRINTF
-#include <stdio.h>
-int main(void)
-{
-    int len1 = _printf("Hello %d %i %%\n", 123, -456);
-    int len2 = printf("Hello %d %i %%\n", 123, -456);
-
-    _printf("Length custom printf: %d\n", len1);
-    printf("Length standard printf: %d\n", len2);
-
-    return 0;
-}
-#endif
