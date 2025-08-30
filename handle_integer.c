@@ -7,7 +7,7 @@
  */
 int print_integer(int n)
 {
-    char buf[12];
+    char buf[12]; /* Buffer to hold digits */
     int i = 0, count = 0;
     unsigned int num;
 

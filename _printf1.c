@@ -19,9 +19,9 @@ int _printf(const char *format, ...)
     {
         if (format[i] == '%')
         {
-            i++; // Move past '%'
+            i++; /* Move past '%' */
             if (format[i] == '\0')
-                return (-1); // Incomplete specifier at end
+                return (-1); /* Incomplete specifier at end */
 
             if (format[i] == 'd' || format[i] == 'i')
             {
@@ -35,12 +35,12 @@ int _printf(const char *format, ...)
             }
             else
             {
-                // Unknown specifier, print as-is
+                /* Unknown specifier, print as-is */
                 write(1, "%", 1);
                 write(1, &format[i], 1);
                 printed_chars += 2;
             }
-            i++; // Move past specifier
+            i++; /* Move past format specifier */
         }
         else
         {
@@ -51,5 +51,5 @@ int _printf(const char *format, ...)
     }
 
     va_end(args);
-    return printed_chars;
+    return (printed_chars);
 }
