@@ -32,7 +32,7 @@ int _printf(const char *format, ...)
                 count += print_int(va_arg(args, int));
             else
             {
-                /* Unknown specifier: print literally */
+                /* Print unknown % sequence as is */
                 count += print_char('%');
                 if (format[i])
                     count += print_char(format[i]);
