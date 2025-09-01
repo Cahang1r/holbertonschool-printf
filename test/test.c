@@ -108,3 +108,23 @@ int _printf(const char *format, ...)
     va_end(args);
     return printed;
 }
+
+
+
+#ifndef MAIN_H
+#define MAIN_H
+
+#include <stdarg.h>
+#include <unistd.h>
+
+/* prototypes */
+int _printf(const char *format, ...);
+int _putchar(char c);
+int print_string(char *s);
+int print_int(int n);
+
+#endif /* MAIN_H */
+
+
+
+
